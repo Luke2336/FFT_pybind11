@@ -28,7 +28,7 @@ vector<complex<double>> fft(vector<complex<double>> in) {
 		N <<= 1;
 	}
 	vector<complex<double>> out(N);
-	for (int i = in.size(); i < in_len; i++) {
+	for (int i = in_len; i < N; i++) {
 		in.push_back(complex<double>(0, 0));
 	}
 	int bitlen = log2(N);
@@ -57,7 +57,7 @@ vector<complex<double>> ifft(vector<complex<double>> in) {
 	while (N < in_len) {
 		N <<= 1;
 	}
-	for (int i = in.size(); i < in_len; i++) {
+	for (int i = in_len; i < N; i++) {
 		in.push_back(complex<double>(0, 0));
 	}
 	vector<complex<double>> out(N);
@@ -88,18 +88,3 @@ PYBIND11_MODULE(_FFT, m) {
   m.def("fft", &fft);
   m.def("ifft", &ifft);
 }
-
-
-// int main () { // polynomial multiplication
-// 	int n = 4;
-// 	vector<complex<double>> a = {1, 2, 0, 0};
-// 	vector<complex<double>> b = {2, 3, 0, 0};
-// 	vector<complex<double>> a_fft(n), b_fft(n), ab_fft(n), ab(n);
-// 	a_fft = fft(a), b_fft = fft(b);
-// 	for (int i = 0; i < n; i++)
-// 		ab_fft[i] = a_fft[i] * b_fft[i];
-// 	ab = ifft(ab_fft);
-// 	for (auto p : ab)
-// 		cout << int(p.real() + 1e-6) << " ";
-// 	return 0;
-// }
